@@ -39,12 +39,13 @@ def test_timed_cache_varargs():
             ((), {}),
             (range(0, 10), dict(foo="bar")),
             (range(5, 10), dict(foo="bar")),
+            (range(5, 10), dict(foo="baz")),
             (range(7, 10), dict(foo="bar", baz="Hello, World!")),
             (range(3, 10), dict(foo="bar", baz="Hello, World!")),
             (range(4, 10), dict(foo="bar", baz="Hello, World!")),
             (range(4, 10), dict(baz="Hello, World!", foo="bar")),
         ]:
-            assert foo(*a, **kw)[0] == tuple(a)
+            assert foo(*a, **kw) == ((*a,), *sorted(kw.items()))
 
 
 @pytest.mark.timeout(4)
