@@ -35,10 +35,13 @@ def test_process_with_lock():
 
 def test_submit_doubles():
     expected = [12, 6, 10, 14]
+    fs = []
     class Pool:
         def submit(self, f, *a, **kw):
             assert not a,  "Please do not submit positional args"
             assert not kw, "Please do not submit keyword args"
-            assert f(*a, **kw) == expected.pop(0), "return value is wrong"
+            fs.append((f, a, kw))
     problems.submit_doubles(Pool(), [6, 3, 5, 7])
+    for f, a, kw in fs:
+        assert f(*a, **kw) == expected.pop(0), "return value is wrong"
     assert expected == []
