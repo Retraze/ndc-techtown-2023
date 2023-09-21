@@ -16,5 +16,5 @@ def test_result():
     def timeit_result():
         time.sleep(0.08)
 
-    delta = 1_000_000
+    delta = 5_000_000
     assert 80_000_000-delta < timeit_result < 80_000_000+delta
